@@ -109,6 +109,8 @@ def get_types(ndim, dtype):
         vcg_concat_vals_type=np.ctypeslib.ndpointer(dtype=dtype, ndim=1, flags=read_req),
         vcg_val_sizes_type=np.ctypeslib.ndpointer(dtype='uint32', ndim=1, flags=read_req),
         vcg_ret_alloc_type=np.ctypeslib.ndpointer(dtype='uint32', ndim=1, flags=write_req),
+        joined_vecfunc_type=np.ctypeslib.ndpointer(dtype=dtype, ndim=ndim, flags=write_req),
+        joined_vecfunc_arg_type=np.ctypeslib.ndpointer(dtype='uint32', ndim=ndim + 1, flags=write_req),
     )
 
 
@@ -150,9 +152,11 @@ def load_lib(ndim, dtype):
 
     }
     vcg_join_func = {k: getattr(lib, 'vcg_join_%s' % v) for k, v in vcg_join_func.items()}
+    t['vcg_join_func'] = vcg_join_func
 
     vcg_maille_tuffin_func = {(True,): 'buildtime', (False,): 'main'}
     vcg_maille_tuffin_func = {k: getattr(lib, 'vcg_maille_tuffin_%s' % v) for k, v in vcg_maille_tuffin_func.items()}
+    t['vcg_maille_tuffin_func'] = vcg_maille_tuffin_func
 
     for vcg_join in vcg_join_func.values():
         vcg_join.argtypes = (
