@@ -27,7 +27,7 @@ setup(
     author_email="liran.funaro+vecfunc-vcg@gmail.com",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url="https://bitbucket.org/funaro/vecfunc-vcg",
+    url="https://github.com/liran-funaro/vecfunc-vcg",
     keywords='vector function vcg jointfunc maille tuffin',
     classifiers=[
         "Programming Language :: Python :: 3",
