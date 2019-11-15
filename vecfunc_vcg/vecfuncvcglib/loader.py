@@ -90,13 +90,15 @@ def make_lib(ndim, dtype):
     ndim, dtype = normalize_parameters(ndim, dtype)
 
     make_file_path = locate_lib_path("makefile")
+    print(make_file_path)
     cwd = os.path.dirname(make_file_path)
 
     params_str = "(dim=%s, value=%s)" % (ndim, dtype)
     cmd = "make dim=%s value=%s" % (ndim, dtype)
     caller = inspect.stack()[2]
-    print("Building module for: %s. CMD: %s. Called from: %s (%s)." % (params_str, cmd, caller[1], caller[2]),
-          file=sys.stderr)
+    print(f"Building module for: {params_str}. "
+          f"CMD: {cmd}. Called from: {caller[1]} ({caller[2]}). "
+          f"In folder: {cwd}.", file=sys.stderr)
     ret = subprocess.run(cmd, shell=True, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if ret.stderr:
         print(str(ret.stderr, 'utf-8'), file=sys.stderr)
